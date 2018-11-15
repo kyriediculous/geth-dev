@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:xenial
 
 RUN apt-get update \
      && apt-get install -y wget software-properties-common \
@@ -8,13 +8,16 @@ WORKDIR "/root"
 
 RUN add-apt-repository -y ppa:ethereum/ethereum
 
+ARG binary
 RUN apt-get update \
-     && apt-get install -y ethereum-swarm=0.3.4+build15490+bionic  geth=1.8.16+build15490+bionic
+     && apt-get install -y geth ethereum-swarm
 
 ARG password
 ARG privatekey
 RUN echo $password > ~/.accountpassword
 RUN echo $privatekey > ~/.privatekey
+ADD ./genesis.json ./genesis.json
+RUN geth init genesis.json
 RUN geth account import --password ~/.accountpassword  ~/.privatekey
 
 ENV address=""

@@ -1,17 +1,19 @@
-FROM ubuntu
+FROM ubuntu:xenial
 
 RUN apt-get update \
-     && apt-get install -y wget \
+     && apt-get install -y wget software-properties-common \
      && rm -rf /var/lib/apt/lists/*
 
+WORKDIR "/root"
+
+RUN add-apt-repository -y ppa:ethereum/ethereum
+
 ARG binary
-WORKDIR "/opt"
-RUN wget "https://gethstore.blob.core.windows.net/builds/$binary"
-RUN tar -xzvf $binary --strip 1
-RUN rm $binary
+RUN apt-get update \
+     && apt-get install -y ethereum
 
 ENV nodekeyhex=""
-CMD exec ./bootnode -nodekeyhex $nodekeyhex
+CMD exec bootnode -nodekeyhex $nodekeyhex
 
 EXPOSE 30301/udp
 EXPOSE 30303/udp
