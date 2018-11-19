@@ -24,7 +24,11 @@ ENV address=""
 ENV bootnodeId=""
 ENV bootnodeIp=""
 
+<<<<<<< HEAD
 CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid "6660001" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcapi "eth,web3,net,admin,debug,db" --rpccorsdomain "*" --syncmode="full"
+=======
+CMD exec geth --bootnodes "enode://$bootnodeId@$bootnodeIp:30301" --networkid="500" --verbosity=4 --rpc --rpcaddr "0.0.0.0" --rpcapi "eth,web3,personal,net,miner,admin,debug,db" --rpccorsdomain "*" --syncmode=full --etherbase $address
+>>>>>>> master
 
 EXPOSE 8545
 EXPOSE 30303

@@ -16,6 +16,8 @@ ARG password
 ARG privatekey
 RUN echo $password > ~/.accountpassword
 RUN echo $privatekey > ~/.privatekey
+ADD ./genesis.json ./genesis.json
+RUN geth init genesis.json
 RUN geth account import --password ~/.accountpassword  ~/.privatekey
 
 ENV address=""
